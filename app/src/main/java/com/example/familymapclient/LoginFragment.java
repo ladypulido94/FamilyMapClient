@@ -9,12 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.fragment.app.Fragment;
 
-public class LoginFragment extends Fragment {
+import Request.LoginRequest;
+import Result.LoginResult;
+
+public class LoginFragment extends Fragment implements LoginTask.Listener {
 
     private EditText serverPort;
     private EditText serverHost;
@@ -106,6 +108,11 @@ public class LoginFragment extends Fragment {
 
     }
 
+    @Override
+    public void onLoginComplete(LoginResult loginResult) {
+
+    }
+
     private class editTextWatcher implements TextWatcher {
 
         private String pass = "";
@@ -145,6 +152,18 @@ public class LoginFragment extends Fragment {
             register.setEnabled(true);
         } else {
             register.setEnabled(false);
+        }
+    }
+
+    private void login(){
+        try{
+            LoginTask loginTask = new LoginTask(serverHostWatcher.getPass(), Integer.parseInt(serverPortWatcher.getPass()),this);
+            LoginRequest loginRequest = new LoginRequest(usernameWatcher.getPass(), passwordWatcher.getPass());
+            loginTask.execute(loginRequest);
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+
         }
     }
 

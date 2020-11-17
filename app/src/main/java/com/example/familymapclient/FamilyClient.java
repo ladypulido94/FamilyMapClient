@@ -40,7 +40,7 @@ public class FamilyClient {
             loginURL = new URL(FamilyClient.HTTP, serverHost, serverPort, LOGIN);
         }
         catch (MalformedURLException e) {
-            Log.e("FamilyClient", "incorrect login URL");
+            Log.e("FamilyClient", "Incorrect login URL");
             return null;
         }
 
@@ -85,12 +85,12 @@ public class FamilyClient {
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 return readString(connection.getInputStream());
             } else {
-                Log.e("Client", "HttpURLConnection response was not HTTP_OK");
+                Log.e("FamilyClient", "HttpURLConnection response was not HTTP_OK");
                 return readString(connection.getErrorStream());
             }
         }
         catch (IOException e) {
-            System.out.println("couldn't open url connection");
+            System.out.println("Couldn't open url connection");
             e.printStackTrace();
         }
         return null;
